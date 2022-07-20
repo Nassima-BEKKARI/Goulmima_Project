@@ -8,4 +8,28 @@ app_home:
 
 app_register:
   path: /register
-  controller: App\Controller\RegistrationController::register
+  controller:
+    App\Controller\RegistrationController::register
+
+    #[Route(path: '/login', name: 'app_login')]
+app_login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+app_logout:
+  path: /logout
+  controller: App\Controller\SecurityController::logout
+
+app_allChambres:
+  path: /chambres
+  controller: App\Controller\ChambreController::allChambres
+
+app_chambre:
+  path: /chambre
+  controller: App\Controller\ChambreController::chambre
+
+app_be_admin:
+  path: /passer_admin/{id}
+  controller: App\Controller\SecurityController::passerAdmin
+  requirements:
+    id: '\d+'

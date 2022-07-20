@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+{% block title %}
+	Passer en admin
+{% endblock
+%}
+{% block content %}
+	<div class="alert alert-dismissible alert-info">
+
+
+		<h4>Passer en admin l'utilisateur,
+			{{user.nom ~ ' ' ~ user.prenom}}</h4>
+	</div>
+	<h4>Veuillez confirmer le code secret:
+	</h4>
+	{{ form_start(formAdmin) }}
+	{{ form_row(formAdmin.secret) }}
+	{{ form_end(formAdmin) }}
+
+
+{% endblock %}

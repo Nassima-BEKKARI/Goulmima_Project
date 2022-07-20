@@ -1,80 +1,107 @@
-{% extends 'base.html.twig' %} {% block title %}{% endblock %} {% block body %}
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Accueil</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarColor02"
-        aria-controls="navbarColor02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+{% extends 'base.html.twig' %}
+{% block title %}{% endblock %}
+{% block body %}
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{{path('app_home')}}">Accueil</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-      <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#"> Le gîte </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Les chambres</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Réservation</a>
-          </li>
-          {# Pour admin #}
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              >Admin</a
-            >
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </li>
-        </ul>
-        <div class="d-flex">
-          <h6>Bonjour et bienvenue</h6>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-<main>{% block content %}{% endblock %}</main>
-<footer>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="nav-link" href=""> - CGV</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=""> - Nous contacter </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=""> - Qui sommes nous</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=""> - Nos Valeurs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=""> - Rejoindre l'équipe</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</footer>
+				<div class="collapse navbar-collapse" id="navbarColor02">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								Le gîte
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_allChambres')}}">Les chambres</a>
+
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Réservation</a>
+						</li>
+						{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_login')}}">Login</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+							</li>
+						{% endif %}
+						<li class="nav-item">
+							<a class="nav-link" href="#">Panier</a>
+						</li>
+						{# Pour admin #}
+						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">Ajouter une chambre</a>
+									<a class="dropdown-item" href="#">Ajouter une photo</a>
+									<a class="dropdown-item" href="#">Something else here</a>
+									<div class="dropdown-divider"></div>
+								</div>
+							</li>
+						{% endif %}
+					</ul>
+					{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+						<div class="row text-right">
+							<h6 class="text-white">
+								Bonjour
+								{{ app.user.nom ~ ' ' ~ app.user.prenom}}</h6>
+						</div>
+					{% endif %}
+
+				</div>
+			</div>
+		</nav>
+	</header>
+	<main class="container mt-5 mb-5">
+		{%  for message in app.flashes('error') %}
+			<div class="alert alert-danger text-center">
+				{{message}}</div>
+		{% endfor %}
+		{%  for message in app.flashes('success') %}
+			<div class="alert alert-success text-center">
+				{{message}}</div>
+		{% endfor %}
+		{% block content %}{% endblock %}
+
+	</main>
+	<footer>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mx-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="">
+							- CGV</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">
+							- Nous contacter
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">
+							- Qui sommes nous</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">
+							- Nos Valeurs</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">
+							- Rejoindre l'équipe</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</footer>
 {% endblock %}

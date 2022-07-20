@@ -21,9 +21,9 @@ class RegistrationFormType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('qualite', ChoiceType::class, [
-    'choices' => [
-        'Manager' => 'M',
-        'Assistant manager' => 'AM'
+        'choices' => [
+            'Manager' => 'M',
+            'Assistant manager' => 'AM'
     ]])
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
