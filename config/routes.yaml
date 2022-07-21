@@ -36,11 +36,11 @@ app_be_admin:
 
 app_admin_allChambres:
   path: /admin/chambres
-  controller: App\Controller\AdminController::listeChambres
+  controller: App\Controller\AdminController::allChambres
 
 app_select:
   path: /chambre/{id}
-  controller: App\Controller\AdminController::listeChambres
+  controller: App\Controller\ChambreController::select
   requirements:
     id: '\d+'
 
