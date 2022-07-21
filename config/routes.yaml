@@ -38,6 +38,12 @@ app_admin_allChambres:
   path: /admin/chambres
   controller: App\Controller\AdminController::listeChambres
 
+app_select:
+  path: /chambre/{id}
+  controller: App\Controller\AdminController::listeChambres
+  requirements:
+    id: '\d+'
+
 app_admin_addChambre:
   path: /admin/addChambre
   controller: App\Controller\AdminController::addChambre
@@ -51,5 +57,11 @@ app_admin_updateChambre:
 app_admin_deleteChambre:
   path: /admin/deleteChambre/{id}
   controller: App\Controller\AdminController::deleteChambre
+  requirements:
+    id: '\d+'
+
+app_admin_deletePhoto:
+  path: /admin/deletePhoto/{id}
+  controller: App\Controller\AdminController::deletePhoto
   requirements:
     id: '\d+'

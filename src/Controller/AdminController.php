@@ -46,7 +46,9 @@ class AdminController extends AbstractController
             $chambre->addPhoto($photo);
             }
             $repo->add($chambre,1);
-            return $this->redirectToRoute("app_home");
+            return $this->redirectToRoute("app_admin_allChambres
+            
+            ");
         }
             return $this->render("admin/formulaireChambre.html.twig",[
             "formChambre"=> $form->createView()]);
@@ -80,7 +82,7 @@ class AdminController extends AbstractController
             $manager->persist($chambre);
             $manager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_admin_allChambres');
     }
         return $this->render('admin/formulaireChambre.html.twig', [
             'formChambre' => $form->createView()
@@ -93,6 +95,21 @@ class AdminController extends AbstractController
         $chambre = $repo->find($id);
         $repo->remove($chambre, 1);
 
-        return $this->redirectToRoute("admin/chambres.html.twig");
+        return $this->redirectToRoute("app_admin_allChambres");
+    }
+
+    public function allChambres(ChambreRepository $repo)
+    {
+        $chambres = $repo->findAll();
+        dd($chambres);
+        return $this->render('admin/chambres.html.twig', [
+        'chambres'=> $chambres
+        ]);
+
+    }
+
+    public function deletePhoto(Photo $photo, Request $request)
+    {
+
     }
 }
