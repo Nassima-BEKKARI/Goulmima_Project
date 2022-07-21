@@ -6,6 +6,8 @@ use App\Entity\Chambre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ChambreType extends AbstractType
 {
@@ -21,6 +23,8 @@ class ChambreType extends AbstractType
                 'Supérieure' => 'supérieure'
     ]])
             ->add('prix')
+            // ->add('photo')
+            ->add('Ajouter', SubmitType::class)
         ;
     }
 

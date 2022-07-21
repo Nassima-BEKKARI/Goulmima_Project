@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ChambreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: ChambreRepository::class)]
 class Chambre
@@ -20,10 +23,19 @@ class Chambre
     private ?string $description = null;
 
     #[ORM\Column(length: 255, columnDefinition:"ENUM('simple', 'double', 'supérieure')")]
-    private ?string $Type = null;
+    private ?string $type = null;
 
     #[ORM\Column]
     private ?int $prix = null;
+
+    #[ORM\OneToMany(mappedBy: 'chambre', targetEntity: Photo::class, orphanRemoval: true)]
+    private Collection $photos;
+
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -57,12 +69,12 @@ class Chambre
 
     public function getType(): ?string
     {
-        return $this->Type;
+        return $this->type;
     }
 
-    public function setType(string $Type): self
+    public function setType(string $type): self
     {
-        $this->Type = $Type;
+        $this->type = $type;
 
         return $this;
     }
@@ -75,6 +87,36 @@ class Chambre
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getChambre() === $this) {
+                $photo->setChambre(null);
+            }
+        }
 
         return $this;
     }

@@ -33,3 +33,11 @@ app_be_admin:
   controller: App\Controller\SecurityController::passerAdmin
   requirements:
     id: '\d+'
+
+app_admin_allChambres:
+  path: /admin/chambres
+  controller: App\Controller\AdminController::listeChambres
+
+app_admin_addChambre:
+  path: /admin/addChambre
+  controller: App\Controller\AdminController::addChambre
