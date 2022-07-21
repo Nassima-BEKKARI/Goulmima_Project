@@ -6,6 +6,7 @@ use App\Entity\Photo;
 use App\Entity\Chambre;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,5 +50,49 @@ class AdminController extends AbstractController
         }
             return $this->render("admin/formulaireChambre.html.twig",[
             "formChambre"=> $form->createView()]);
+    }
+
+    public function updateChambre($id, ManagerRegistry $doctrine, ChambreRepository $repo, Request $request, SluggerInterface $slugger)
+    {
+        $chambre = $repo->find($id);
+        $form = $this->createform(ChambreType::class, $chambre);
+        $form->handlerequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if($form->get('photos')->getData())
+            {
+            $images = $form->get('photos')->getData();
+
+            foreach($images as $image){
+            $imageName = $slugger->slug($chambre->getNom()) . uniqid() . '.' . $image->guessExtension();
+            
+            try{
+                $image->move($this->getParameter('photos_chambres'), $imageName);
+            } catch (FileException $error){
+
+            }
+            $photo = new Photo();
+            $photo->setNom($imageName);
+            $chambre->addPhoto($photo);
+            }
+        }
+            $manager = $doctrine->getManager();
+            $manager->persist($chambre);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_home');
+    }
+        return $this->render('admin/formulaireChambre.html.twig', [
+            'formChambre' => $form->createView()
+        ]);
+        
+    }
+
+    public function deleteChambre(ChambreRepository $repo, $id)
+    {
+        $chambre = $repo->find($id);
+        $repo->remove($chambre, 1);
+
+        return $this->redirectToRoute("admin/chambres.html.twig");
     }
 }

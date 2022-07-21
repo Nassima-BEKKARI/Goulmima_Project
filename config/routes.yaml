@@ -41,3 +41,15 @@ app_admin_allChambres:
 app_admin_addChambre:
   path: /admin/addChambre
   controller: App\Controller\AdminController::addChambre
+
+app_admin_updateChambre:
+  path: /admin/updateChambre/{id}
+  controller: App\Controller\AdminController::updateChambre
+  requirements:
+    id: '\d+'
+
+app_admin_deleteChambre:
+  path: /admin/deleteChambre/{id}
+  controller: App\Controller\AdminController::deleteChambre
+  requirements:
+    id: '\d+'
