@@ -28,7 +28,7 @@ class Chambre
     #[ORM\Column]
     private ?int $prix = null;
 
-    #[ORM\OneToMany(mappedBy: 'chambre', targetEntity: Photo::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'chambre', targetEntity: Photo::class, orphanRemoval: true, cascade:["persist"])]
     private Collection $photos;
 
     public function __construct()
