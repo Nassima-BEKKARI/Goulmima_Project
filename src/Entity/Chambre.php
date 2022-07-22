@@ -31,9 +31,13 @@ class Chambre
     #[ORM\OneToMany(mappedBy: 'chambre', targetEntity: Photo::class, orphanRemoval: true, cascade:["persist"])]
     private Collection $photos;
 
+    #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'Chambre')]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -116,6 +120,33 @@ class Chambre
             if ($photo->getChambre() === $this) {
                 $photo->setChambre(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->addChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            $reservation->removeChambre($this);
         }
 
         return $this;
