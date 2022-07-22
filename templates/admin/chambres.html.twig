@@ -27,7 +27,11 @@
 					<td>{{ chambre.id }}</td>
 					<td>{{ chambre.nom }}</td>
 					<td>{{ chambre.description }}</td>
-					{# <td><img class="img-thumbnail" src="{{ asset('photosChambres/' ~ chambre.photo.nom) }}" alt="{{ chambre.nom }}"></td> #}
+					{% for image in chambre.photos %}
+
+						<td><img class="img-thumbnail" src="{{ asset('photosChambres/' ~ image.nom)}}" alt="" width="150"></td>
+
+					{% endfor %}
 					<td>{{ chambre.prix }}</td>
 					<td>
 						<a href="{{path("app_select",{id:chambre.id})}}">

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Photo;
 use App\Entity\Chambre;
 use App\Form\ChambreType;
+use App\Repository\PhotoRepository;
 use App\Repository\ChambreRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,12 +99,12 @@ class AdminController extends AbstractController
         return $this->redirectToRoute("app_admin_allChambres");
     }
 
-    public function allChambres(ChambreRepository $repo)
+    public function allChambres(ChambreRepository $repo, )
     {
         $chambres = $repo->findAll();
-        dd($chambres);
+        // dd($chambres);
         return $this->render('admin/chambres.html.twig', [
-        'chambres'=> $chambres
+        'chambres'=> $chambres,
         ]);
 
     }

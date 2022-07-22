@@ -1,2 +1,61 @@
-{% extends 'layout.html.twig' %} {% block title %}Chambres {% endblock %} {%
-block content %} {% endblock %}
+{% extends 'layout.html.twig' %}
+{% block title %}Chambres
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h2>Nos Chambres</h2>
+					<p>Cogitavisse erant puerilis utrum efficiantur adhuc expeteretur.</p>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="mg-page mg-available-rooms">
+
+			{# <div class="row">
+																				<div class="col-md-12">
+																					<div class="mg-avl-room"> #}
+			<div class="row">
+				{% for chambre in chambres %}
+					<div class="col-sm-5 mb-3">
+						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+							<div class="carousel-inner">
+								{% for photo in chambre.photos %}
+									<div {% if loop.index0 ==0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}></span>
+									<img src="{{ asset('photosChambres/' ~ photo.nom ) }}" class="d-block w-100 vh-50" alt="{{ photo.nom}}">
+								</div>
+							{% endfor %}
+						</div>
+						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<h3 class="mg-avl-room-title">
+						<a href="#">{{chambre.nom}}</a>
+						<span>{{chambre.prix}}DH/nuitée</span>
+
+					</h3>
+					<p>{{chambre.description}}</p>
+
+					<a class="btn btn-dark" href="#">Réservez maintenant
+						<i class="fa fa-angle-double-right"></i>
+					</a>
+
+				</div>
+			{% endfor %}
+			{# </div>
+																			</div> #}
+		</div>
+	</div>
+</div>{% endblock %}
