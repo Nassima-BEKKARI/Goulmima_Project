@@ -69,3 +69,9 @@ app_admin_deletePhoto:
 app_book:
   path: /book
   controller: App\Controller\ReservationController::book
+
+app_bookAction:
+  path: /bookaction/{id}
+  controller: App\Controller\ReservationController::bookaction
+  requirements:
+    id: '\d+'

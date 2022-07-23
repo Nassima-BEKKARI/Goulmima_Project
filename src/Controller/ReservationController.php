@@ -26,4 +26,18 @@ class ReservationController extends AbstractController
             'formReservation' => $form->createView()
         ]);
     }
+
+    public function bookaction(ReservationRepository $repo, $id)
+    {
+        $dateEntree = $repo->find($id);
+        $date1= $dateEntree-> getDateArrivee();
+        $dateDepart = $repo->find($id);
+        $date2= $dateDepart->getDateDepart();
+        $nbdays = $date2->diff($date1)->days;
+
+        
+        return $this->render('reservation/book.html.twig', [
+        'nbdays'=> $nbdays
+        ]);
+    }
 }

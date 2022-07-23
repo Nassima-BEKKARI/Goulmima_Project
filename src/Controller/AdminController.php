@@ -109,8 +109,8 @@ class AdminController extends AbstractController
 
     }
 
-    public function deletePhoto(Photo $photo, Request $request)
-    {
+    // public function deletePhoto(Photo $photo, Request $request)
+    // {
 
-    }
+    // }
 }
