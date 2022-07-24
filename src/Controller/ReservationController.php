@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class ReservationController extends AbstractController
 {
-    public function book(Request $request, ReservationRepository $repo, ManagerRegistry $doctrine)
+    public function book(Request $request, ReservationRepository $repo, ManagerRegistry $doctrine, SessionInterface $session)
     {
         $reservation = new Reservation();
         $form = $this->createform(ReservationType::class, $reservation);
@@ -27,24 +27,12 @@ class ReservationController extends AbstractController
 
             // dd($reservation);
             $repo->add($reservation,1);
-            return $this->redirectToRoute('app_home');
+            
+            $session->set('reservation', $reservation);
+            return $this->redirectToRoute('app_panier');
         }
         return $this->render('reservation/formulaireReservation.html.twig', [
             'formReservation' => $form->createView()
-        ]);
-    }
-
-    public function bookaction(ReservationRepository $repo, $id)
-    {
-        $dateEntree = $repo->find($id);
-        $date1= $dateEntree-> getDateArrivee();
-        $dateDepart = $repo->find($id);
-        $date2= $dateDepart->getDateDepart();
-        $nbdays = $date2->diff($date1)->days;
-
-        
-        return $this->render('reservation/book.html.twig', [
-        'nbdays'=> $nbdays
         ]);
     }
 }

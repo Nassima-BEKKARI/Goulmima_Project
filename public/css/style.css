@@ -3598,7 +3598,9 @@ h1, h2, h3, h4, h5, h6 {
 .footer-bottom .footer-social a:hover {
   color: #f3c300;
 }
-
+#bookBtn{
+  color: #000;
+}
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */

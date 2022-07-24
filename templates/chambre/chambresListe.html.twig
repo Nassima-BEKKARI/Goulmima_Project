@@ -17,8 +17,8 @@
 			class="mg-page mg-available-rooms">
 
 			{# <div class="row">
-																				<div class="col-md-12">
-																					<div class="mg-avl-room"> #}
+																							<div class="col-md-12">
+																								<div class="mg-avl-room"> #}
 			<div class="row">
 				{% for chambre in chambres %}
 					<div class="col-sm-5 mb-3">
@@ -48,14 +48,15 @@
 					</h3>
 					<p>{{chambre.description}}</p>
 
-					<a class="btn btn-dark" href="#">Réservez maintenant
+					<a class="btn btn-dark" href="{{path('app_book')}}">Réservez maintenant
+
 						<i class="fa fa-angle-double-right"></i>
 					</a>
 
 				</div>
 			{% endfor %}
 			{# </div>
-																			</div> #}
+																						</div> #}
 		</div>
 	</div>
 </div>{% endblock %}

@@ -75,3 +75,9 @@ app_bookAction:
   controller: App\Controller\ReservationController::bookaction
   requirements:
     id: '\d+'
+
+app_panier:
+  path: /panier
+  controller: App\Controller\PanierController::panier
+  requirements:
+    id: '\d+'
