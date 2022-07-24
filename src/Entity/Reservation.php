@@ -23,7 +23,7 @@ class Reservation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateDepart = null;
 
-    #[ORM\ManyToMany(targetEntity: Chambre::class, inversedBy: 'reservations')]
+    #[ORM\ManyToMany(targetEntity: Chambre::class, inversedBy: 'reservations', cascade:["persist"])]
     private Collection $Chambre;
 
     public function __construct()
@@ -72,6 +72,7 @@ class Reservation
     {
         if (!$this->Chambre->contains($chambre)) {
             $this->Chambre[] = $chambre;
+            
         }
 
         return $this;

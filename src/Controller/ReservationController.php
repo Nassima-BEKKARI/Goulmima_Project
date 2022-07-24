@@ -19,6 +19,7 @@ class ReservationController extends AbstractController
         $form->handlerequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            // dd($reservation);
             $repo->add($reservation,1);
             return $this->redirectToRoute('app_home');
         }

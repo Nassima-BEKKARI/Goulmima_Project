@@ -26,7 +26,8 @@ class ReservationType extends AbstractType
                 'class'=>Chambre::class,
                 'choice_label'=>'nom',
                 'placeholder'=>"choisissez une chambre",
-                'mapped' => false
+                'mapped' => false,
+                // 'allow_add' => true
             ])
             ->add('reserver', SubmitType::class)
         ;
